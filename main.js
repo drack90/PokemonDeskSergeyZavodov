@@ -2,12 +2,16 @@ function $getElById(id){
   return document.getElementById(id);
 }
 
+/**
+*re formate code use .this
+ */
+
 const $btn = $getElById('btn-kick')
 
 const character = {
   name: 'Pikachu',
-  defaultHP: 100,
-  damageHP: 100,
+  defaultHP: 130,
+  damageHP: 130,
   kick: '',
   elHp: $getElById('health-character'),
   elProgressBar: $getElById('progressbar-character'),
@@ -55,23 +59,25 @@ function renderHP() {
 function renderHpLife() {
   this.elHp.innerText = this.damageHP + ' / ' + this.defaultHP;
 }
-
+/* add render width progress bar in percent of all HP*/
 function renderProgressbarHP() {
-  this.elProgressBar.style.width = this.damageHP + '%'
+  persentKick = this.damageHP/this.defaultHP*100;
+  this.elProgressBar.style.width = Math.ceil(persentKick)  + '%'
 }
 
+//func count hp
 function changeHP(count) {
   this.damageHP -= count;
+  /*add kick count for display in log*/
   this.kick = count;
   
   const log = this === enemy ? generateLog(this, character) : generateLog(this, enemy)
 
-  /*выводим лог боя в div#logs в отдельном теге p */
+  /*display battle log in div$logs in 'p' tag*/
   const $p = document.createElement('p');
   $p.innerText = log;
-  const $logs = document.querySelector('#logs');
+  const $logs = document.querySelector('#log');
   $logs.insertBefore($p, $logs.children[0]).log;
-  
 
   if(this.damageHP <= 0){
     this.damageHP =0;
@@ -92,7 +98,7 @@ function generateLog(firstPerson, secondPerson) {
     `${firstPerson.name} поперхнулся, и за это ${secondPerson.name} с испугу приложил прямой удар коленом в лоб врага. - ${firstPerson.kick}HP [${firstPerson.damageHP} / ${firstPerson.defaultHP}]`,
     `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага.  - ${firstPerson.kick}HP [${firstPerson.damageHP} / ${firstPerson.defaultHP}]`,
     `${firstPerson.name} забылся, но в это время наглый ${secondPerson.name}, приняв волевое решение, неслышно подойдя сзади, ударил.  - ${firstPerson.kick}HP [${firstPerson.damageHP} / ${firstPerson.defaultHP}]`,
-    `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} случайно нанес мощнейший удар.  - ${firstPerson.kick}}HP [${firstPerson.damageHP} / ${firstPerson.defaultHP}]`,
+    `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} случайно нанес мощнейший удар.  - ${firstPerson.kick}HP [${firstPerson.damageHP} / ${firstPerson.defaultHP}]`,
     `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} нехотя раздробил кулаком \<вырезанно цензурой\> противника.  - ${firstPerson.kick}HP [${firstPerson.damageHP} / ${firstPerson.defaultHP}]`,
     `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар.  - ${firstPerson.kick}HP [${firstPerson.damageHP} / ${firstPerson.defaultHP}]`,
     `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар.  - ${firstPerson.kick}HP [${firstPerson.damageHP} / ${firstPerson.defaultHP}]`,

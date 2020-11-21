@@ -472,3 +472,22 @@ h1 {
 .action label {
     padding: 6px 0;
 }
+
+/*необязательное оформление поля лога боя :) */
+.logs {
+	min-height: 200px;
+	max-height: 400px;
+	display: block;	
+	overflow: hidden;
+	background-color: #fff;
+	border: 3px solid #00f;
+	border-radius: 25px;
+	margin: 50px 20%; 
+	padding: 10px;
+	opacity: 0.8;	
+}
+
+.log {
+	height: 190px;
+	overflow-y: auto;
+}
