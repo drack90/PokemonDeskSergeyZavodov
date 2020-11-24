@@ -1,12 +1,34 @@
 function $getElById(id){
   return document.getElementById(id);
 }
+function $getElQuerySelector(id) {
+  return document.querySelector(id)
+}
 
-/**
-*re formate code use .this
- */
+//(не может в английский на таком уровне) Сделал кнопки объектами что бы проще было обращаться с ними.
+//И была возможность унифицировать и прочее.
+const $btn = {
+  name: 'Thunder Jolt',
+  id: $getElById('btn-kick'),
+  elSelector: $getElQuerySelector('#btn-kick'),
+  clickLimitName: 4, //disp in button name
+  clickLimit: 4,  //button tap counter
+  renderButtonName,
+  countClick: countClick(),
+  /** #ВОПРОСМЕНТОРУ: если в данном месте ставить без обявления имени то функция перестаёт работать
+  *  Я правильно понимаю что это происходит из-за вложеной функции согласно уроку 04.03? */
+}
 
-const $btn = $getElById('btn-kick')
+const $btnKickBall = {
+  name: 'Kick on the ball',
+  id: $getElById('btn-ballKick'),
+  elSelector: $getElQuerySelector('#btn-ballKick'),
+  clickLimitName: 4,
+  clickLimit: 4,
+  renderButtonName,
+  countClick: countClick(),
+}
+
 
 const character = {
   name: 'Pikachu',
@@ -15,10 +37,10 @@ const character = {
   kick: '',
   elHp: $getElById('health-character'),
   elProgressBar: $getElById('progressbar-character'),
-  renderHP: renderHP,
-  renderHpLife: renderHpLife,
-  renderProgressbarHP:renderProgressbarHP,
-  changeHP:changeHP,
+  renderHP,
+  renderHpLife,
+  renderProgressbarHP,
+  changeHP,
 }
 
 const enemy = {
@@ -28,26 +50,37 @@ const enemy = {
   kick: '',
   elHp: $getElById('health-enemy'),
   elProgressBar: $getElById('progressbar-enemy'),
-  renderHP: renderHP,
-  renderHpLife: renderHpLife,
-  renderProgressbarHP:renderProgressbarHP,
-  changeHP:changeHP,
+  renderHP,
+  renderHpLife,
+  renderProgressbarHP,
+  changeHP,
 }
 
-$btn.addEventListener('click', function () {
-  console.log('Kick!');
+//add event from tap in bnt 'kick on the ball' - pikachu hut
+
+$btnKickBall.id.addEventListener('click', function () {
+  enemy.changeHP(random(25));
+  renderAllHP();
+  $btnKickBall.countClick($btnKickBall.clickLimit); //add counter in button click
+  renderAllHP();
+  $btnKickBall.renderButtonName();
+})
+
+$btn.id.addEventListener('click', function () {
   character.changeHP(random(20));
   enemy.changeHP(random(20));
-  character.renderHP();
-  enemy.renderHP();
-    
+  $btn.countClick($btn.clickLimit);
+  renderAllHP();
+  $btn.renderButtonName();
+
 });
 
 
 function init() {
   console.log('Start Game!');
-  character.renderHP();
-  enemy.renderHP();
+  renderAllHP();
+  renderAllButtonName();
+
 }
 
 function renderHP() {
@@ -64,6 +97,40 @@ function renderProgressbarHP() {
   persentKick = this.damageHP/this.defaultHP*100;
   this.elProgressBar.style.width = Math.ceil(persentKick)  + '%'
 }
+
+//func render all character hp
+function renderAllHP() {
+  character.renderHP();
+  enemy.renderHP();
+}
+
+
+/**NEW FUNC */
+function renderButtonName() {
+  btnName = this.name + ' [' + (this.clickLimitName + 1) + ']'
+  this.id.innerText = btnName;
+}
+
+function renderAllButtonName() {
+  $btn.renderButtonName();
+  $btnKickBall.renderButtonName();
+}
+
+function countClick() {
+  let countClick = 0;
+
+    return function (countLimit) {
+      ++countClick;
+      if (countLimit >= countClick){
+        return this.clickLimitName -= 1;
+      }else if(this.clickLimitName === 0){
+          this.elSelector.setAttribute("disabled", "disabled"); //disable button
+          return this.clickLimitName -= 1;
+      }
+    }
+}
+
+
 
 //func count hp
 function changeHP(count) {
