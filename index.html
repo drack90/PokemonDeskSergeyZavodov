@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -20,7 +20,7 @@
         <div class="pokemon character">
             <span class="lvl">Lv. 1</span>
 
-            <img src="http://sify4321.000webhostapp.com/pikachu.png" class="sprite">
+            <img src="assets/pokemon_icon/pikachu.png" class="sprite">
 
             <div class="details">
                 <h2 class="name" id="name-character">
@@ -39,12 +39,15 @@
             <button class="button" id="btn-kick">
                 Thunder Jolt
             </button>
+            <button class="button" id="btn-ballKick">
+                Kick on the ball
+            </button>
         </div>
 
         <div class="pokemon enemy">
             <span class="lvl">Lv. 1</span>
 
-            <img src="http://sify4321.000webhostapp.com/charmander.png" class="sprite">
+            <img src="assets/pokemon_icon/charmander.png" class="sprite">
 
             <div class="details">
                 <h2 class="name" id="name-enemy">
@@ -59,7 +62,12 @@
             </div>
         </div>
     </div>
+    <div id="logs" class="logs">
+	<div class="log" id="log"></div>
 </div>
+</div>
+
+
 <div class="catch_screen"></div>
 
 <script src="main.js"></script>
