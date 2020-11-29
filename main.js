@@ -31,10 +31,10 @@ import {$modal} from "./includes/modal.js"
 //
 // modal.show();
 
-console.log(pokemons[0])
+
 const playerOne = pokemons[random(pokemons.length) -1];
 
-const player1 = new Pokemon({
+let player1 = new Pokemon({
   selectors: 'player1',
   ...playerOne,
 
@@ -62,22 +62,50 @@ player1.attacks.forEach(item =>{
     player2.changeHP(random(item.maxDamage, item.minDamage), function (count) {
       console.log(count)
       collectLog(player2, player1, count);
-    });``
+    });
+    let reload = reloadPlayer2();
+    
+    
   })
   $control.appendChild($btn);
 
 })
 
-const player2 = new Pokemon({
-  name: 'Charmander',
-  type: 'fire',
-  hp: 300,
-  selectors: 'player2'
+let playerTwo = pokemons[random(pokemons.length) -1];
+
+let player2 = new Pokemon({
+   selectors: 'player2',
+   ...playerTwo
 });
 
+function battleCounter(count){
+  
 
+  return function(){
+    return count--;
+  }
+}
 
+const reloadCounter = battleCounter(3);
 
+function reloadPlayer2(){
 
+ 
+  if(player2.damageHP === 0){
+    
+    
+    console.log(reloadCounter()); 
+    playerTwo = pokemons[random(pokemons.length) -1];
+    
+    player2 = new Pokemon({
+      selectors:'player2',
+      ...playerTwo
+    }) 
+    if(reloadCounter() <= 0){
+      alert('KOKOKO')
+    }
+     
+  }
+}
 
 

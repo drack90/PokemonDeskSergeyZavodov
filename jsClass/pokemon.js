@@ -3,7 +3,8 @@ class Selectors {
   constructor(name) {
     this.elHP = document.getElementById(`health-${name}`);
     this.elProgressBar = document.getElementById(`progressbar-${name}`);
-    this.elImg = document.getElementById(`img-${name}`)
+    this.elImg = document.getElementById(`img-${name}`);
+    this.nameText = document.getElementById(`name-${name}`);
   }
 }
 
@@ -19,6 +20,7 @@ class Pokemon extends Selectors{
     this.attacks = attacks;
     this.renderHP();
     this.renderImg();
+    this.renderName();
   }
 
    changeHP = (count, cb) => {
@@ -28,9 +30,9 @@ class Pokemon extends Selectors{
         this.damageHP =0;
         alert('Бедный ' + this.name + ' проиграл бой!');
         //off all button which contain .button class
-        for(let i=0; i<$AllBtn.length; i++){
-          $AllBtn[i].disabled =true;
-        }
+        // for(let i=0; i<$AllBtn.length; i++){
+        //   $AllBtn[i].disabled =true;
+        // }
       }
 
     this.renderHP();
@@ -40,17 +42,16 @@ class Pokemon extends Selectors{
    renderHP = () => {
     this.renderHpLife();
     this.renderProgressbarHP();
-
   }
 
-  // function renderImg (player1){
-//   let $elImg = document.getElementById('img-player1');
-//   $elImg.src = player1.img;
-// }
-// renderImg(player1);
+
   renderImg = () => {
     this.elImg.src = this.img;
   };
+
+  renderName = () => {
+    this.nameText.innerText = this.name;
+  }
 
    renderHpLife = () => {
     this.elHP.innerText = this.damageHP + ' / ' + this.hp;
