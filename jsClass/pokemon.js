@@ -10,9 +10,10 @@ class Selectors {
 
 class Pokemon extends Selectors{
 
-  constructor({name, hp, type, selectors, img, attacks =[]},) {
+  constructor({name, hp, type, selectors, id, img, attacks =[]},) {
     super(selectors);
     this.name = name;
+    this.id = id;
     this.hp = hp;
     this.damageHP = hp;
     this.img = img;
@@ -29,10 +30,7 @@ class Pokemon extends Selectors{
      if(this.damageHP <= 0){
         this.damageHP =0;
         alert('Бедный ' + this.name + ' проиграл бой!');
-        //off all button which contain .button class
-        // for(let i=0; i<$AllBtn.length; i++){
-        //   $AllBtn[i].disabled =true;
-        // }
+
       }
 
     this.renderHP();
@@ -68,6 +66,7 @@ class Pokemon extends Selectors{
 
     this.elProgressBar.style.width = Math.ceil(persentKick)  + '%'
   }
+
 
 }
 
