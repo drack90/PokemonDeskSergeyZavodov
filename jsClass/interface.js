@@ -3,33 +3,60 @@ import collectLog from "../jsModule/log.js";
 import battleCount from "../jsModule/battleCounter.js";
 
 class Interface {
+
+  addSelectionBox = async()=> {
+    
+    const $selectionClass = document.querySelector('.selection_box');
+    const $plyground=document.querySelector('.playground')
+    const $log =document.querySelector('.logs');
+    const $roundsDiv = document.getElementById('rounds');
+    $plyground.setAttribute('style', 'display:none');//прячем поле playgroun
+    $log.setAttribute('style', 'display:none');//прячем поле лог
+    $roundsDiv.setAttribute('style','display:none');
+    this.allPokemons = await this.getAllPokemons();
+    this.allPokemons.forEach(item => {     
+      const $div = document.createElement('div');
+      $div.setAttribute('id', `${item.id}`);
+      $div.innerHTML = `<img class="selection_icon" src="${item.img}">`;
+      $selectionClass.appendChild($div)
+            $div.addEventListener('click', async ()=> {
+                this.player1ID = await this.getPokemonFromId(`${item.id}`)
+                console.log(this.player1ID.id);
+                await this.addStartButton();
+            })
+
+    });
+  };
+
   removeAllButtons =() => {
     const allButtons = document.querySelectorAll('.control .button')
     allButtons.forEach($item => $item.remove());
   }
 
+
   addStartButton = async () => {
-
+    const $selection = document.querySelector('.selection');
+    $selection.remove();
+    const $playground = document.querySelector('.playground')
     const $controlClass = document.querySelector('.control');//выбираем селектор .
-
-    const $btnStart = document.createElement('button');
-    $btnStart.classList.add('button');
-    $btnStart.innerText = 'Start Game';
+    const $log = document.getElementById('logs');
     const $roundsDiv = document.getElementById('rounds');//выбираем поле с количеством раундов
+    $playground.setAttribute('style','display:true');
+    $controlClass.setAttribute('style','display:true');
+    $log.setAttribute('style','display:true');
+    $roundsDiv.setAttribute('style','display:true');
     $roundsDiv.innerText = " "; //  очищаем количество раундов
 
-    $btnStart.addEventListener('click', async () =>{
+    
       $roundsDiv.innerText = 'Rounds 3/3';
       this.removeAllButtons();//очищаем поле удалив все кнопки.
       await this.getPokemons();//добавляем покемонов
 
       await this.getControlButtons();//добавляем кнопки атаки.
 
-    });
-    $controlClass.appendChild($btnStart);
   };
+
   getControlButtons = async () => {
-    console.log(this)
     const $control = document.querySelector('.control')
     //отрисовываем кнопки из массива pokemin.attack
     this.player1.attacks.forEach(item =>{
@@ -70,9 +97,10 @@ class Interface {
     const $btnRestart = document.createElement('button'); //создаём кнопку рестарта
     const $roundsDiv = document.getElementById('rounds');//выбираем поле с количеством раундов
     $roundsDiv.innerText = " "; // очищаем количество раундов
-
+    const $btnChoise = document.getElementById('pokemonChoise')
     $btnRestart.classList.add('button'); //добавляем кнопку рестарт
-    $btnRestart.innerText = 'Restart Game';
+    $btnRestart.setAttribute('id', 'restart');
+    $btnRestart.innerText = 'Retry again';
 
     /**при нажатии удаляем кнопку рестарт. Ставим по дефолту текст раунда.
      *убираем текст о проигрыше
@@ -81,6 +109,7 @@ class Interface {
     $btnRestart.addEventListener('click', async () =>{
       $roundsDiv.innerText = 'Rounds 3/3';
       $btnRestart.remove();
+      $btnChoise.remove();
       gameOverText.remove();
       await this.getPokemons();
       await this.getControlButtons();
@@ -89,6 +118,45 @@ class Interface {
     })
     $controlClass.appendChild(gameOverText);
     $controlClass.appendChild($btnRestart);
+  }
+
+  addReChoiseButton = async () =>{
+    const $controlClass = document.querySelector('.control');//выбираем селектор .
+    const $btnReChoise = document.createElement('button'); //создаём кнопку рестарта
+    const $roundsDiv = document.getElementById('rounds');//выбираем поле с количеством раундов
+    $btnReChoise.classList.add('button'); //добавляем кнопку рестарт
+    $btnReChoise.setAttribute('id','pokemoChoise')
+    $btnReChoise.innerText = 'Choise new Pokemon';
+
+    /**при нажатии удаляем кнопку рестарт. Ставим по дефолту текст раунда.
+     *убираем текст о проигрыше
+     *добавялем покемонов
+     *добавялем кнопки контроля*/
+    $btnReChoise.addEventListener('click', async () =>{
+      const $body = document.querySelector('.body');
+      const gameOverText = document.querySelector('.game-over');
+      const $btnRestart = document.getElementById('restart');
+      const $selection = document.createElement('div');
+      const $choiseText = document.createElement('div');
+      const $selectionBox = document.createElement('div');
+      $choiseText.classList.add('choise_text');
+      $choiseText.innerHTML = '<span>Choose your fighter</span>'
+      $selectionBox.classList.add('selection_box');
+      $selection.classList.add('selection')
+      console.log($selection);
+      await $body.appendChild($selection);
+      const $selectionSelector = document.querySelector('.selection');
+      $selectionSelector.appendChild($choiseText);
+      $selectionSelector.appendChild($selectionBox);
+      $roundsDiv.innerText = 'Rounds 3/3';
+      $btnRestart.remove();
+      gameOverText.remove();
+      $btnReChoise.remove();
+      this.removeHotCriticalClass(this.player1);
+      this.removeHotCriticalClass(this.player2);
+      this.addSelectionBox();
+    })
+    $controlClass.appendChild($btnReChoise);
   }
 
 

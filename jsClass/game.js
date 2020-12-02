@@ -10,6 +10,18 @@ class Game extends Interface{
     super()
   }
 
+  getAllPokemons = async () =>{
+    const res = await fetch(`https://reactmarathon-api.netlify.app/api/pokemons`);
+    const body1 = await res.json();
+    return body1;
+  }
+
+  getPokemonFromId = async (pokemonId) =>{
+    const $id  = pokemonId;
+    const responce = await fetch(`https://reactmarathon-api.netlify.app/api/pokemons?id=${$id}`);
+    const body = await responce.json();
+    return body;
+  }
 
   getPokemonRandom = async () => {
     const responce = await fetch('https://reactmarathon-api.netlify.app/api/pokemons?random=true');
@@ -25,8 +37,8 @@ class Game extends Interface{
   }
 
   getPokemons = async () => {
-
-    const playerOne = await this.getPokemonRandom();
+    const pokemonId = this.player1ID.id
+    const playerOne = await this.getPokemonFromId(pokemonId);
 
     this.player1 = new Pokemon({
       selectors: 'player1',
@@ -52,8 +64,7 @@ class Game extends Interface{
   }
 
   startGame = async () => {
-    await this.addStartButton();
-    console.log(this.player2)
+    this.addSelectionBox();
   }
 
 
@@ -81,6 +92,7 @@ class Game extends Interface{
       this.player1.damageHP = 0;
       this.removeAllButtons();
       this.addRestartButton();
+      this.addReChoiseButton();
     }
   }
 }
