@@ -1,3 +1,14 @@
+@font-face {
+    font-family: 'Pokemon Solid';
+    src: url('fonts/PokemonSolidNormal.woff2') format('woff2'),
+    url('fonts/PokemonSolidNormal.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
 * {
     box-sizing: border-box;
 }
@@ -35,11 +46,12 @@ body {
 }
 
 .control {
-    width: 320px;
+    width: 400px;
     height: 260px;
     position: relative;
     margin: 20px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
@@ -273,7 +285,7 @@ body {
     min-height: 30px;
     vertical-align: middle;
     padding: 12px 20px;
-    margin: 0px 10px;
+    margin: 10px;
     outline: none !important;
     cursor: pointer;
     font-size: 18px;
@@ -476,19 +488,39 @@ h1 {
 
 /*необязательное оформление поля лога боя :) */
 .logs {
-	min-height: 200px;
-	max-height: 400px;
-	display: block;	
-	overflow: hidden;
-	background-color: #fff;
-	border: 3px solid #00f;
-	border-radius: 25px;
-	margin: 50px 20%; 
-	padding: 10px;
-	opacity: 0.8;	
+    min-height: 200px;
+    max-height: 400px;
+    display: block;
+    overflow: hidden;
+    background-color: rgba(234, 240, 230, 0.5);
+    border: 3px solid #00f;
+    border-radius: 25px;
+    margin: 0px 20%;
+    padding: 10px;
+    opacity: 0.8;
 }
 
 .log {
-	height: 190px;
-	overflow-y: auto;
+    height: 190px;
+    overflow-y: auto;
+}
+
+.rounds{
+    font-family: 'Pokemon Solid';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 48px;
+    letter-spacing: 5px;
+    color: #eec428;
+    -webkit-text-stroke: 2px #073fa7; /* width and color */
+}
+
+.game-over{
+    font-family: 'Pokemon Solid';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 60px;
+    letter-spacing: 5px;
+    color: #eec428;
+    -webkit-text-stroke: 2px #073fa7; /* width and color */
 }
