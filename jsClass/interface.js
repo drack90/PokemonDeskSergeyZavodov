@@ -97,7 +97,7 @@ class Interface {
     const $btnRestart = document.createElement('button'); //создаём кнопку рестарта
     const $roundsDiv = document.getElementById('rounds');//выбираем поле с количеством раундов
     $roundsDiv.innerText = " "; // очищаем количество раундов
-    
+    const $btnChoise = document.getElementById('pokemonChoise')
     $btnRestart.classList.add('button'); //добавляем кнопку рестарт
     $btnRestart.setAttribute('id', 'restart');
     $btnRestart.innerText = 'Retry again';
@@ -107,8 +107,6 @@ class Interface {
      *добавялем покемонов
      *добавялем кнопки контроля*/
     $btnRestart.addEventListener('click', async () =>{
-      const $btnChoise = document.getElementById('pokemoChoise')
-    console.log($btnChoise);
       $roundsDiv.innerText = 'Rounds 3/3';
       $btnRestart.remove();
       $btnChoise.remove();
